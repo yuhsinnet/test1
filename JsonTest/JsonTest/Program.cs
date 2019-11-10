@@ -31,10 +31,20 @@ namespace JsonTest
             public string unit { get; set; }
 
         }
-        class Wh
+           class Area
+            {
+                public string AreaName { get; set; }
+                public List<Sensor> Sensors { get; set; }
+
+            }
+
+        class WH
         {
-            public string Area { get; set; }
-            public List<Sensor> Sensors { get; set; }
+
+ 
+
+            
+            public List<Area> Areas { get; set; }
 
         }
 
@@ -42,18 +52,59 @@ namespace JsonTest
         {
             var options = new JsonSerializerOptions
             {
-                WriteIndented = true
+                WriteIndented = true,
+
+                // 使Json 可以顯示中文
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 
-            Wh plj = new Wh
+
+
+            WH plj = new WH
             {
-                Area = "A",
-                Sensors = new List<Sensor>
-                 {
-                     new Sensor { Name = "Hygrometer", Value = 85.6, unit = "%" },
-                     new Sensor { Name = "thermometer", Value = 32.22, unit = "℃" }
-                 }
+                
+                Areas = new List<Area>
+                {
+                    new Area
+                    {
+                        AreaName = "A區",
+
+                     Sensors =new List<Sensor>
+                     {
+                       new Sensor { Name = "濕度", Value = 85.6, unit = "%" },
+                       new Sensor { Name = "溫度", Value = 32.22, unit = "℃" }
+                     }
+                    },
+                    new Area
+                    {
+                        AreaName = "B區",
+                        Sensors = new List<Sensor>
+                        {
+                            new Sensor { Name = "光度", Value = 12000, unit = "Lux" },
+                            new Sensor { Name = "葉面濕度度", Value = 77.8, unit = "%" },
+                            new Sensor { Name = "葉面濕度度2", Value = 85.3, unit = "%" }
+                        }
+                    }
+
+
+                }
             };
+
+
+
+
+
+
+
+            //Area plj = new Area
+            //{
+            //    AreaName = "A區",
+            //    Sensors = new List<Sensor>
+            //     {
+            //         new Sensor { Name = "濕度", Value = 85.6, unit = "%" },
+            //         new Sensor { Name = "溫度", Value = 32.22, unit = "℃" }
+            //     }
+            //};
 
             var WHJson = JsonSerializer.Serialize(plj, options);
 
@@ -92,7 +143,7 @@ namespace JsonTest
             //Console.ReadLine();
             */
 
-                #endregion
+            #endregion
         }
     }
 }
